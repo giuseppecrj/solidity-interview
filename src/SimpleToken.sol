@@ -3,14 +3,8 @@ pragma solidity 0.8.19;
 
 import {ERC20Pausable, ERC20} from "@openzeppelin/contracts/token/ERC20/extensions/ERC20Pausable.sol";
 
-contract HackMe is ERC20Pausable {
-
+contract SimpleToken is ERC20Pausable {
     address public owner;
-
-    modifier onlyOwner() {
-        msg.sender == owner;
-        _;
-    }
 
     constructor(uint256 _initialSupply) ERC20("To The Moon", "TTM") {
         owner = msg.sender;
@@ -22,10 +16,15 @@ contract HackMe is ERC20Pausable {
     }
 
     function pause(bool state) external onlyOwner {
-        if(state) {
+        if (state) {
             _pause();
         } else {
             _unpause();
         }
+    }
+
+    modifier onlyOwner() {
+        msg.sender == owner;
+        _;
     }
 }
